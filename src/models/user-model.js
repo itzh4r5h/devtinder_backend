@@ -15,6 +15,15 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
+    username: {
+      type: String,
+      required: ["true", "name is required"],
+      minLength: [5, "username must be at least 5 characters"],
+      maxLength: [10, "username cannot exceed 10 characters"],
+      trim: true,
+      lowercase: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: ["true", "email is required"],
@@ -56,7 +65,7 @@ const userSchema = new Schema(
         },
       ],
       validate: {
-        validator: function (value) {
+        validator: function(value) {
           return value.length < 10;
         },
         message: "maximum 10 skills are allowed",
@@ -69,7 +78,7 @@ const userSchema = new Schema(
 );
 
 // hash the password before saving in DB
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function() {
   // if password is not modified then no need for hashing
   if (!this.isModified("password")) return;
 
@@ -78,13 +87,13 @@ userSchema.pre("save", async function () {
 });
 
 // methods
-userSchema.methods.verifyPassword = async function (passwordByUser) {
+userSchema.methods.verifyPassword = async function(passwordByUser) {
   const isPasswordValid = await bcrypt.compare(passwordByUser, this.password);
   return isPasswordValid;
 };
 
-userSchema.methods.generateJWT = function () {
-  const token = jwt.sign({ id: this._id}, "my_secret_key_comes_here" , {
+userSchema.methods.generateJWT = function() {
+  const token = jwt.sign({ id: this._id }, "my_secret_key_comes_here", {
     expiresIn: "1d",
   });
 
