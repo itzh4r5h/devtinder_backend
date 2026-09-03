@@ -23,17 +23,14 @@ const passwordObj = {
 export const signupValidator = (data) => {
 
   const schema = Joi.object({
+    username: Joi.string().alphanum().trim().min(5).max(10).required().messages({
+      "string.empty": "username is required",
+      "string.min": "username must be at least 5 characters",
+      "string.max": "username cann't exceed 10 characters",
+    }),
     name: Joi.string().min(3).max(30).required().trim().lowercase(),
     email: Joi.string().trim().lowercase().email().required(),
     ...passwordObj,
-    age: Joi.number().integer().min(18).max(60).required(),
-    gender: Joi.string()
-      .trim()
-      .lowercase()
-      .valid("male", "female", "others")
-      .required().messages({
-        "any.only": "gender must be male or female or others"
-      }),
   });
 
   const { error } = schema.validate(data);

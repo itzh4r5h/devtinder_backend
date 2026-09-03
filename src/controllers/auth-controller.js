@@ -23,16 +23,16 @@ const removePasswordFromUser = (user) => {
 };
 
 export const signup = async (req, res) => {
-  const { name, email, password, age, gender } = req.body;
+  const { username, name, email, password } = req.body;
 
   // will get either error message or undefined
-  const errorMessage = signupValidator({ name, email, password, age, gender });
+  const errorMessage = signupValidator({ username, name, email, password });
 
   if (errorMessage) {
     throw new CustomError(errorMessage, 400);
   }
 
-  const user = await User.create({ name, email, password, age, gender });
+  const user = await User.create({ username, name, email, password });
 
   const userData = removePasswordFromUser(user);
 
@@ -75,11 +75,11 @@ export const signin = async (req, res) => {
   });
 };
 
-export const signout = async (req,res)=>{
-    res.clearCookie('token', {httpOnly: true})
+export const signout = async (req, res) => {
+  res.clearCookie('token', { httpOnly: true })
 
-    res.status(200).json({
-        success: true,
-        message: 'signed out successfully'
-    })
+  res.status(200).json({
+    success: true,
+    message: 'signed out successfully'
+  })
 }

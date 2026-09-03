@@ -9,7 +9,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: ["true", "name is required"],
+      required: [true, "name is required"],
       minLength: [3, "name must be at least 3 characters"],
       maxLength: [30, "name cannot exceed 30 characters"],
       trim: true,
@@ -17,17 +17,17 @@ const userSchema = new Schema(
     },
     username: {
       type: String,
-      required: ["true", "name is required"],
+      required: [true, "username is required"],
       minLength: [5, "username must be at least 5 characters"],
       maxLength: [10, "username cannot exceed 10 characters"],
       trim: true,
       lowercase: true,
-      unique: true,
+      unique: [true, "username already exists"]
     },
     email: {
       type: String,
-      required: ["true", "email is required"],
-      unique: ["true", "account already exists"],
+      required: [true, "email is required"],
+      unique: [true, "account already exists"],
       maxLength: [254, "email is too long"],
       trim: true,
       lowercase: true,
@@ -35,18 +35,16 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: ["true", "password is required"],
+      required: [true, "password is required"],
       select: false,
     },
     age: {
       type: Number,
-      required: ["true", "age is required"],
       min: [18, "age must be between 18-60"],
       max: [60, "age must be between 18-60"],
     },
     gender: {
       type: String,
-      required: ["true", "gender is required"],
       trim: true,
       lowercase: true,
       enum: {
