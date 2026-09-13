@@ -11,7 +11,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "name is required"],
       minLength: [3, "name must be at least 3 characters"],
-      maxLength: [30, "name cannot exceed 30 characters"],
+      maxLength: [20, "name cannot exceed 20 characters"],
       trim: true,
       lowercase: true,
     },
@@ -38,6 +38,39 @@ const userSchema = new Schema(
       required: [true, "password is required"],
       select: false,
     },
+    profilePic: {
+      url: {
+        type: String,
+        required: [true, "profile pic url is required"],
+        default: 'none'
+      },
+      fileId: {
+        type: String,
+        required: [true, "profile pic file id is required"],
+        default: 'none'
+      },
+    },
+    role: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      minLength: [2, 'role must be at least 2 characters'],
+      maxLength: [40, "role can't exceed 500 characters"]
+    },
+    experience: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      enum: {
+        values: ['beginner', 'intermediate', 'advanced', 'expert'],
+        message: "experience must be beginner or intermediate or advanced or expert",
+      },
+    },
+    connections: {
+      type: Number,
+      defautl: 0,
+      min: [0, "connections can't be less than 0"]
+    },
     age: {
       type: Number,
       min: [18, "age must be between 18-60"],
@@ -52,21 +85,28 @@ const userSchema = new Schema(
         message: "gender must be male or female or others",
       },
     },
-    skills: {
+    description: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      minLength: [50, 'description must be at least 50 characters'],
+      maxLength: [500, "description can't exceed 500 characters"]
+    },
+    tags: {
       type: [
         {
           type: String,
-          maxLength: [30, "skill name cann't exceed 30 charactes"],
-          minLength: [1, "skill name must be at least 1 character"],
+          maxLength: [30, "tag name can't exceed 30 characters"],
+          minLength: [1, "tag name must be at least 1 character"],
           trim: true,
           lowercase: true,
         },
       ],
       validate: {
         validator: function(value) {
-          return value.length < 10;
+          return value.length < 15;
         },
-        message: "maximum 10 skills are allowed",
+        message: "maximum 15 tags are allowed",
       },
     },
   },

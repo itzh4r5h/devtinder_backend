@@ -1,6 +1,7 @@
 import { CustomError } from "../middlewares/error-middleware.js";
 import { User } from "../models/user-model.js";
 import { signinValidator, signupValidator } from "../utils/auth-validators.js";
+import { profileCompletion } from "../utils/profileCompletion.js";
 
 const setTokenInCookie = (user, res) => {
   const token = user.generateJWT();
@@ -35,6 +36,8 @@ export const signup = async (req, res) => {
   const user = await User.create({ username, name, email, password });
 
   const userData = removePasswordFromUser(user);
+  const { profileCompletionCount } = profileCompletion(userData)
+  userData.profileCompletionCount = profileCompletionCount
 
   setTokenInCookie(user, res);
   res.status(201).json({
@@ -66,6 +69,8 @@ export const signin = async (req, res) => {
   }
 
   const userData = removePasswordFromUser(user);
+  const { profileCompletionCount } = profileCompletion(userData)
+  userData.profileCompletionCount = profileCompletionCount
 
   setTokenInCookie(user, res);
   res.status(200).json({

@@ -1,6 +1,5 @@
 import express from "express";
 import { connectDB } from "./config/db.js";
-import { User } from "./models/user-model.js";
 import { authRouter } from "./routes/auth-routes.js";
 import { errorMiddleware } from "./middlewares/error-middleware.js";
 import { userRouter } from "./routes/user-routes.js";
@@ -12,7 +11,7 @@ const app = express();
 
 // using essential middelwares
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: "http://10.112.204.80:5173",
   credentials: true
 }))
 app.use(express.json())
