@@ -1,5 +1,5 @@
-import { profileCompletion } from "../utils/profileCompletion"
-import { CustomError } from "./error-middleware"
+import { profileCompletion } from "../utils/profileCompletion.js"
+import { CustomError } from "./error-middleware.js"
 
 export const checkProfileCompletion = async (req, res, next) => {
   const { isProfileCompleted } = profileCompletion(req.user)
