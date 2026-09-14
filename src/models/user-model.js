@@ -68,7 +68,7 @@ const userSchema = new Schema(
     },
     connections: {
       type: Number,
-      defautl: 0,
+      default: 0,
       min: [0, "connections can't be less than 0"]
     },
     age: {
@@ -109,7 +109,31 @@ const userSchema = new Schema(
         message: "maximum 15 tags are allowed",
       },
     },
-  },
+    socials: {
+      github: {
+        type: String,
+        maxLength: [40, "github username can't exceed 40 characters"],
+        minLength: [1, "github username must be at least 1 character"],
+        trim: true,
+        lowercase: true,
+      },
+      linkedin: {
+        type: String,
+        maxLength: [100, "linkedin username can't exceed 100 characters"],
+        minLength: [3, "linkedin username must be at least 3 character"],
+        trim: true,
+        lowercase: true,
+      },
+      x: {
+        type: String,
+        maxLength: [15, "x username can't exceed 15 characters"],
+        minLength: [1, "x username must be at least 1 character"],
+        trim: true,
+        lowercase: true,
+      },
+    }
+  }
+  ,
   {
     timestamps: true,
   },
