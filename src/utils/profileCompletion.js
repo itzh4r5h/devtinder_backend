@@ -1,5 +1,4 @@
 export const profileCompletion = (user) => {
-  console.log(user)
   const profileFields = [
     'username',
     'name',
