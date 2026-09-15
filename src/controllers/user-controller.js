@@ -22,10 +22,13 @@ export const updateProfile = async (req, res) => {
   }
 
   const user = await User.findByIdAndUpdate(req.user._id, req.body, { runValidators: true, returnDocument: 'after' })
+  const userData = user.toObject()
+  const { profileCompletionCount } = profileCompletion(userData)
+  userData.profileCompletionCount = profileCompletionCount
 
   res.status(200).json({
     success: true,
     message: 'updated successfully',
-    user
+    user: userData
   })
 }
