@@ -73,8 +73,8 @@ const userSchema = new Schema(
     },
     age: {
       type: Number,
-      min: [18, "age must be between 18-60"],
-      max: [60, "age must be between 18-60"],
+      min: [11, "age must be between 11-100"],
+      max: [100, "age must be between 11-100"],
     },
     gender: {
       type: String,
