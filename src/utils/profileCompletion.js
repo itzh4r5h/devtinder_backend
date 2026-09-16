@@ -11,6 +11,7 @@ export const profileCompletion = (user) => {
     'gender',
     'description',
     'tags',
+    'socials',
   ]
   const isCompleted = (value) => {
     if (value === undefined || value === null) return false;
