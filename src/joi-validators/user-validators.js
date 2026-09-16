@@ -1,6 +1,8 @@
 import Joi from "joi";
 import { getOnlyErrorMessage } from "../utils/cleanup-helpers.js";
+import { TAG_LABELS } from "../constants/tags.js";
 
+const ALLOWED_TAGS = Object.keys(TAG_LABELS)
 
 export const profileUpdateValidator = (data) => {
   const schema = Joi.object({
@@ -27,10 +29,11 @@ export const profileUpdateValidator = (data) => {
       "string.min": "description must be at least 50 characters",
       "string.max": "description cann't exceed 500 characters",
     }),
-    tags: Joi.array().items(Joi.string().min(1).max(30).trim().lowercase().messages({
+    tags: Joi.array().items(Joi.string().min(1).max(30).trim().lowercase().valid(...ALLOWED_TAGS).messages({
       "string.empty": 'tag name is required',
       "string.min": "tag name is required",
       "string.max": "tag name cann't exceed 30 chars",
+      "any.only": "invalid tag"
     })).min(1)
       .max(15)
       .messages({
