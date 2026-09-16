@@ -1,7 +1,7 @@
 import { CustomError } from "../middlewares/error-middleware.js"
 import { User } from "../models/user-model.js"
 import { profileCompletion } from "../utils/profileCompletion.js"
-import { profileUpdateValidator } from "../utils/user-validators.js"
+import { profileUpdateValidator } from "../joi-validators/user-validators.js"
 
 
 

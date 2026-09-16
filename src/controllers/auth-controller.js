@@ -1,6 +1,6 @@
 import { CustomError } from "../middlewares/error-middleware.js";
 import { User } from "../models/user-model.js";
-import { signinValidator, signupValidator } from "../utils/auth-validators.js";
+import { signinValidator, signupValidator } from "../joi-validators/auth-validators.js";
 import { profileCompletion } from "../utils/profileCompletion.js";
 
 const setTokenInCookie = (user, res) => {

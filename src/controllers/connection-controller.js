@@ -1,7 +1,7 @@
 import { CustomError } from "../middlewares/error-middleware.js";
 import { Connection } from "../models/connection-model.js";
 import { User } from "../models/user-model.js";
-import { connectionReqValidator } from "../utils/connnection-validators.js";
+import { connectionReqValidator } from "../joi-validators/connnection-validators.js";
 
 // ==================================== SEND REQUEST ====================================
 export const sendRequest = async (req, res) => {
