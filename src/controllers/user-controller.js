@@ -2,7 +2,7 @@ import { CustomError } from "../middlewares/error-middleware.js"
 import { User } from "../models/user-model.js"
 import { profileCompletion } from "../utils/profileCompletion.js"
 import { profileUpdateValidator } from "../joi-validators/user-validators.js"
-
+import { imagekitInstance, uploadToImageKit } from "../utils/uploadImage.js"
 
 
 
@@ -31,4 +31,37 @@ export const updateProfile = async (req, res) => {
     message: 'updated successfully',
     user: userData
   })
+}
+
+export const updateProfilePic = async (req, res) => {
+  const { buffer, originalname } = req.file;
+
+  let user = await User.findById(req.user._id);
+  if (user.profilePic.fileId !== "none") {
+    await imagekitInstance.deleteFile(user.profilePic.fileId);
+  }
+
+  const { url, fileId } = await uploadToImageKit(
+    buffer,
+    originalname,
+    `devtinder/`
+  );
+
+  // then saves the url and fileId in db
+  user = await User.findByIdAndUpdate(
+    req.user._id,
+    { profilePic: { url, fileId } },
+    { runValidators: true, new: true }
+  );
+
+  const userData = user.toObject()
+  const { profileCompletionCount } = profileCompletion(userData)
+  userData.profileCompletionCount = profileCompletionCount
+
+
+  res.status(200).json({
+    success: true,
+    message: "profile picture updated",
+    user: userData,
+  });
 }
