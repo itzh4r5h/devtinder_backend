@@ -131,6 +131,10 @@ const userSchema = new Schema(
         trim: true,
         lowercase: true,
       },
+    },
+    isProfileCompleted: {
+      type: Boolean,
+      default: false,
     }
   }
   ,

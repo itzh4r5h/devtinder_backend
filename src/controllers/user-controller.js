@@ -25,6 +25,11 @@ export const updateProfile = async (req, res) => {
   const userData = user.toObject()
   const { profileCompletionCount } = profileCompletion(userData)
   userData.profileCompletionCount = profileCompletionCount
+  if (profileCompletionCount === 100 && !user.isProfileCompleted) {
+    user.isProfileCompleted = true
+    await user.save()
+  }
+
 
   res.status(200).json({
     success: true,
@@ -58,6 +63,10 @@ export const updateProfilePic = async (req, res) => {
   const { profileCompletionCount } = profileCompletion(userData)
   userData.profileCompletionCount = profileCompletionCount
 
+  if (profileCompletionCount === 100 && !user.isProfileCompleted) {
+    user.isProfileCompleted = true
+    await user.save()
+  }
 
   res.status(200).json({
     success: true,
