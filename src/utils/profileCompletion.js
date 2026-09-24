@@ -33,6 +33,5 @@ export const profileCompletion = (user) => {
   const completedFields = profileFields.filter((field) => isCompleted(user[field])).length
   const result = completedFields / profileFields.length
   const profileCompletionCount = Math.round(result * 100)
-  const isProfileCompleted = profileCompletionCount === 100 ? true : false
-  return { profileCompletionCount, isProfileCompleted }
+  return { profileCompletionCount }
 }
