@@ -41,8 +41,8 @@ export const sendRequest = async (req, res) => {
     success: true,
     message:
       status === "interested"
-        ? "connection request sent successfully"
-        : "connection ignored successfully",
+        ? "connection request sent"
+        : "connection ignored",
   });
 };
 
@@ -163,12 +163,13 @@ export const connectionFeed = async (req, res) => {
 
   const filter = {
     _id: { $nin: [loggedInUserId, ...connectedUsersIds] },
+    isProfileCompleted: true,
   };
 
   const totalUsers = await User.countDocuments(filter);
   let page = parseInt(req.query?.page) || 1;
   const limit = 2;
-  const totalPages = Math.ceil(totalUsers / limit);
+  const totalPages = Math.ceil(totalUsers / limit) || 1;
 
   if (page > totalPages) {
     page = 1;
@@ -177,7 +178,7 @@ export const connectionFeed = async (req, res) => {
   const skip = (page - 1) * limit;
 
   const users = await User.find(filter)
-    .select("name")
+    .select("name profilePic tags role")
     .sort({ _id: 1 })
     .skip(skip)
     .limit(limit);
@@ -185,7 +186,6 @@ export const connectionFeed = async (req, res) => {
   return res.status(200).json({
     users,
     currentPage: page,
-    totalPages,
     totalUsers,
   });
 };
