@@ -104,7 +104,7 @@ const userSchema = new Schema(
       ],
       validate: {
         validator: function(value) {
-          return value.length < 15;
+          return value.length <= 15;
         },
         message: "maximum 15 tags are allowed",
       },
