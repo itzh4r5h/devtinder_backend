@@ -11,7 +11,7 @@ const app = express();
 
 // using essential middelwares
 app.use(cors({
-  origin: "http://10.112.204.80:5173",
+  origin: "http://10.34.121.80:5173",
   credentials: true
 }))
 app.use(express.json())
