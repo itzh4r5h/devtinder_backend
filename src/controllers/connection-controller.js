@@ -168,7 +168,7 @@ export const connectionFeed = async (req, res) => {
 
   const totalUsers = await User.countDocuments(filter);
   let page = parseInt(req.query?.page) || 1;
-  const limit = 2;
+  const limit = 15;
   const totalPages = Math.ceil(totalUsers / limit) || 1;
 
   if (page > totalPages) {
