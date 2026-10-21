@@ -53,7 +53,7 @@ export const viewSentRequests = async (req, res) => {
   const sentRequests = await Connection.find({
     fromUser: loggedInUserId,
     status: "interested",
-  }).populate("toUser", "name");
+  }).populate("toUser", "name profilePic role");
 
   const data = sentRequests.map((connectionReq) => {
     return {
@@ -105,7 +105,7 @@ export const viewPendingReviewRequests = async (req, res) => {
   const pendingConnectionRequests = await Connection.find({
     toUser: loggedInUserId,
     status: "interested",
-  }).populate("fromUser", "name");
+  }).populate("fromUser", "name role profilePic tags");
 
   const data = pendingConnectionRequests.map((connectionReq) => {
     return {
