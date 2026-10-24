@@ -68,11 +68,31 @@ export const viewSentRequests = async (req, res) => {
   });
 };
 
+// ==================================== CANCEL SENT REQUEST ====================================
+export const cancelSentRequest = async (req, res) => {
+  const loggedInUserId = req.user._id;
+
+  const connectionReq = await Connection.findOneAndDelete({
+    _id: req.params.connection_id,
+    fromUser: loggedInUserId,
+    status: "interested",
+  });
+
+  if (!connectionReq) {
+    throw new CustomError("connection req not found", 404);
+  }
+
+
+  res.status(200).json({
+    success: true,
+    message: ` req cancelled successfully`,
+  });
+};
 // ==================================== REVIEW REQUEST - ACCEPT OR REJECT ====================================
 export const reviewRequest = async (req, res) => {
   const { status, id } = req.body;
   const loggedInUserId = req.user._id;
-
+  //isSendReq is toggle change validation
   const errorMessage = connectionReqValidator({ status, id, isSendReq: false });
 
   if (errorMessage) {
