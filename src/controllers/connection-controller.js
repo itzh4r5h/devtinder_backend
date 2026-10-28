@@ -112,6 +112,15 @@ export const reviewRequest = async (req, res) => {
   connectionReq.status = status;
   await connectionReq.save({ validateBeforeSave: true });
 
+  if (status === 'accepted') {
+    await User.findByIdAndUpdate(loggedInUserId, {
+      $inc: { connections: 1 },
+    });
+    await User.findByIdAndUpdate(connectionReq.fromUser, {
+      $inc: { connections: 1 },
+    });
+  }
+
   res.status(200).json({
     success: true,
     message: `connection ${status} successfully`,
@@ -148,16 +157,16 @@ export const viewConnections = async (req, res) => {
     $or: [{ fromUser: loggedInUserId }, { toUser: loggedInUserId }],
     status: "accepted",
   })
-    .populate("fromUser", "name")
-    .populate("toUser", "name");
+    .populate("fromUser", "name profilePic")
+    .populate("toUser", "name profilePic");
 
   const data = connections.map((conn) => {
     // if logged in user is sender then return receiver user data
     // otherwise return sender data
     if (loggedInUserId.toString() === conn.fromUser._id.toString()) {
-      return conn.toUser;
+      return { user: conn.toUser, connectionId: conn._id };
     }
-    return conn.fromUser;
+    return { user: conn.fromUser, connectionId: conn._id };
   });
 
   res.status(200).json({
