@@ -157,9 +157,8 @@ export const viewConnections = async (req, res) => {
     $or: [{ fromUser: loggedInUserId }, { toUser: loggedInUserId }],
     status: "accepted",
   })
-    .populate("fromUser", "name profilePic")
-    .populate("toUser", "name profilePic");
-
+    .populate("fromUser", "name profilePic role experience connections description tags age gender createdAt socials")
+    .populate("toUser", "name profilePic role experience connections description tags age gender createdAt socials")
   const data = connections.map((conn) => {
     // if logged in user is sender then return receiver user data
     // otherwise return sender data
