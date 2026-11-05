@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from "express";
 import { connectDB } from "./config/db.js";
 import { authRouter } from "./routes/auth-routes.js";
@@ -11,7 +12,7 @@ const app = express();
 
 // using essential middelwares
 app.use(cors({
-  origin: "http://10.34.121.80:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }))
 app.use(express.json())
@@ -34,8 +35,8 @@ app.use(errorMiddleware)
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(3000, () => {
-      console.log("listening on port 3000");
+    app.listen(process.env.PORT, () => {
+      console.log(`listening on port ${process.env.PORT}`);
     });
   } catch (error) {
     console.error(error.message)

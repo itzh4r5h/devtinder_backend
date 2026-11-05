@@ -4,9 +4,9 @@ import ImageKit from "imagekit";
 
 // initializing imagekit with credentials from env
 export const imagekitInstance = new ImageKit({
-  publicKey: PUBLIC_KEY,
-  privateKey: PRIVATE_KEY,
-  urlEndpoint: URL_ENDPOINT
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: "https://ik.imagekit.io/hczmohsn7"
 });
 
 // configuring multer for handling file uploads in memory

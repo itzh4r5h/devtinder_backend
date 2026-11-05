@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const connectDB = async ()=>{
-    await mongoose.connect("mongodb://localhost:27017/devtinder")
-    console.log("connected to db")
+export const connectDB = async () => {
+  await mongoose.connect(process.env.DB_CONNECTION_STRING)
+  console.log("connected to db")
 }
