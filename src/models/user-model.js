@@ -159,7 +159,7 @@ userSchema.methods.verifyPassword = async function(passwordByUser) {
 };
 
 userSchema.methods.generateJWT = function() {
-  const token = jwt.sign({ id: this._id }, "my_secret_key_comes_here", {
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 
