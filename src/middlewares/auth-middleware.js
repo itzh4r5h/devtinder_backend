@@ -9,7 +9,7 @@ export const isAuthorized = async (req, res, next) => {
     throw new CustomError("invalid session, please signin!", 401);
   }
 
-  const { id } = jwt.verify(token, "my_secret_key_comes_here");
+  const { id } = jwt.verify(token, process.env.JWT_SECRET);
 
   const user = await User.findById(id);
 
