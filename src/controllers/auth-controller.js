@@ -12,6 +12,8 @@ const setTokenInCookie = (user, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === 'prod' ? true : false,
+    sameSite: 'lax',
     maxAge: ONE_DAY,
   });
 };
