@@ -8,9 +8,10 @@ import { imagekitInstance, uploadToImageKit } from "../utils/uploadImage.js"
 
 export const viewProfile = async (req, res) => {
   const user = await User.findById(req.user._id)
-  const { profileCompletionCount } = profileCompletion(user)
-  user.profileCompletionCount = profileCompletionCount
-  res.status(200).json(user)
+  const userData = user.toObject()
+  const { profileCompletionCount } = profileCompletion(userData)
+  userData.profileCompletionCount = profileCompletionCount
+  res.status(200).json(userData)
 }
 
 export const updateProfile = async (req, res) => {
