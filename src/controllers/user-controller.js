@@ -7,7 +7,7 @@ import { imagekitInstance, uploadToImageKit } from "../utils/uploadImage.js"
 
 
 export const viewProfile = async (req, res) => {
-  const user = { ...req.user._doc }
+  const user = await User.findById(req.user._id)
   const { profileCompletionCount } = profileCompletion(user)
   user.profileCompletionCount = profileCompletionCount
   res.status(200).json(user)
